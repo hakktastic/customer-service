@@ -1,4 +1,3 @@
-# improved caching
 FROM openjdk:11-slim
 EXPOSE 8081
 ARG DEPENDENCY=target/dependency
