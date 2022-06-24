@@ -34,9 +34,6 @@ public class CustomerController {
     @PostMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
 
-        //final Customer customerEntity = repository.save(customer);
-        //return new ResponseEntity<>(customerEntity, HttpStatus.CREATED);
-
         logger.info("create customer --> starting creation of customer -> {}", customer);
 
         var optionalCustomer = customerService.createCustomer(customer);
