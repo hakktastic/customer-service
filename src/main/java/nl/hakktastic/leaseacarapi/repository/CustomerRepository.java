@@ -9,8 +9,6 @@ import java.util.Optional;
 
 /**
  * JPA Repository for Customer Entities.
- *
- * @author HAKKI CABUK
  */
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
