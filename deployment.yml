@@ -19,7 +19,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-      - image: hakktastic/customer-service:0.0.1
+      - image: hakktastic/customer-service:0.1.0
         imagePullPolicy: Always
         name: customer-service
         ports:
