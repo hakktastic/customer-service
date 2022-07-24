@@ -1,7 +1,4 @@
-/**
- * This package is about the {@link javax.persistence.Entity} objects of the REST service.
- *
- */
+/** This package is about the {@link javax.persistence.Entity} objects of the REST service. */
 @NonNullApi
 @NonNullFields
 package nl.hakktastic.leaseacarapi.entity;

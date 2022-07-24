@@ -1,6 +1,6 @@
 /**
- * This package is about the {@link org.springframework.data.jpa.repository.JpaRepository} objects of the REST service.
- *
+ * This package is about the {@link org.springframework.data.jpa.repository.JpaRepository} objects
+ * of the REST service.
  */
 @NonNullApi
 @NonNullFields
