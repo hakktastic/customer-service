@@ -8,66 +8,63 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Service object for managing {@link nl.hakktastic.leaseacarapi.entity.Customer} entities.
- */
+/** Service object for managing {@link nl.hakktastic.leaseacarapi.entity.Customer} entities. */
 @Service
 public class CustomerService {
 
-    @Autowired
-    private CustomerRepository repository;
+  @Autowired private CustomerRepository repository;
 
-    /**
-     * Create a {@link Customer} entity.
-     *
-     * @param customer {@link Customer}
-     * @return Returns the customer created as an {@link Optional}
-     */
-    public Optional<Customer> createCustomer(Customer customer) {
+  /**
+   * Create a {@link Customer} entity.
+   *
+   * @param customer {@link Customer}
+   * @return Returns the customer created as an {@link Optional}
+   */
+  public Optional<Customer> createCustomer(Customer customer) {
 
-        return Optional.of(repository.save(customer));
-    }
+    return Optional.of(this.repository.save(customer));
+  }
 
-    /**
-     * Delete a {@link Customer} entity.
-     *
-     * @param id ID of the customer to be deleted
-     */
-    public void deleteCustomer(int id) {
+  /**
+   * Delete a {@link Customer} entity.
+   *
+   * @param id ID of the customer to be deleted
+   */
+  public void deleteCustomer(int id) {
 
-        var customerEntity = repository.getReferenceById(id);
-        repository.delete(customerEntity);
-    }
+    var customerEntity = this.repository.getReferenceById(id);
+      this.repository.delete(customerEntity);
+  }
 
-    /**
-     * Get all {@link Customer} entities from the repository.
-     *
-     * @return Returns a {@link List} with found {@link Customer} entities
-     */
-    public List<Customer> getAllCustomers() {
+  /**
+   * Get all {@link Customer} entities from the repository.
+   *
+   * @return Returns a {@link List} with found {@link Customer} entities
+   */
+  public List<Customer> getAllCustomers() {
 
-        return repository.findAll();
-    }
+    return this.repository.findAll();
+  }
 
-    /**
-     * Find a single {@link Customer} entity with provided ID.
-     *
-     * @param id ID of the car to be returned
-     * @return Returns an {@link Optional} containing the {@link Customer} entity
-     */
-    public Optional<Customer> getSingleCustomer(int id) {
+  /**
+   * Find a single {@link Customer} entity with provided ID.
+   *
+   * @param id ID of the car to be returned
+   * @return Returns an {@link Optional} containing the {@link Customer} entity
+   */
+  public Optional<Customer> getSingleCustomer(int id) {
 
-        return repository.findById(id);
-    }
+    return this.repository.findById(id);
+  }
 
-    /**
-     * Find a single {@link Customer} entity with provided name.
-     *
-     * @param name of the customer to be returned
-     * @return Returns an {@link Optional} containing the {@link Customer} entity
-     */
-    public Optional<Customer> getSingleCustomer(String name) {
+  /**
+   * Find a single {@link Customer} entity with provided name.
+   *
+   * @param name of the customer to be returned
+   * @return Returns an {@link Optional} containing the {@link Customer} entity
+   */
+  public Optional<Customer> getSingleCustomer(String name) {
 
-        return repository.findByName(name);
-    }
+    return this.repository.findByName(name);
+  }
 }

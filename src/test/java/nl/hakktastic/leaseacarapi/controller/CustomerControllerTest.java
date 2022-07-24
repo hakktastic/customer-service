@@ -25,60 +25,67 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(value = CustomerController.class)
 public class CustomerControllerTest {
 
-    @MockBean
-    private CustomerRepository customerRepository;
+  @MockBean private CustomerRepository customerRepository;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired private MockMvc mockMvc;
 
-    private Customer mockCustomer = new Customer("Mock Customer", "Mock Street", 101, "1000OK",
-            "Mockingedam", "mock.customer@gmail.com", 0101235476);
+  private final Customer mockCustomer =
+      new Customer(
+          "Mock Customer",
+          "Mock Street",
+          101,
+          "1000OK",
+          "Mockingedam",
+          "mock.customer@gmail.com",
+          0101235476);
 
-    private String expectedResult =
-            "{\"name\": \"Mock Customer\", \"street\": \"Mock Street\", "
-                    + "\"houseNumber\": 101, \"zipcode\": \"1000OK\", \"place\": \"Mockingedam\", "
-                    + "\"email\": \"mock.customer@gmail.com\", \"phoneNumber\": 0101235476 }";
+  private final String expectedResult =
+      "{\"name\": \"Mock Customer\", \"street\": \"Mock Street\", "
+          + "\"houseNumber\": 101, \"zipcode\": \"1000OK\", \"place\": \"Mockingedam\", "
+          + "\"email\": \"mock.customer@gmail.com\", \"phoneNumber\": 0101235476 }";
 
-    @Test
-    public void testCreateCustomer() throws Exception {
+  @Test
+  public void testCreateCustomer() throws Exception {
 
-        // mock request
-        final RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post("/customers").contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(mockCustomer));
-        final MvcResult actualResult = mockMvc.perform(requestBuilder).andReturn();
+    // mock request
+    final RequestBuilder requestBuilder =
+        MockMvcRequestBuilders.post("/customers")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(new ObjectMapper().writeValueAsString(this.mockCustomer));
+    final MvcResult actualResult = this.mockMvc.perform(requestBuilder).andReturn();
 
-        // check HTTP response
-        assertTrue(actualResult.getResponse().getStatus() == 201);
-    }
+    // check HTTP response
+    assertTrue(actualResult.getResponse().getStatus() == 201);
+  }
 
-    @Test
-    public void testDeleteCustomer() throws Exception {
+  @Test
+  public void testDeleteCustomer() throws Exception {
 
-        // mock request
-        final RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/customers/1001")
-                .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
-        final MvcResult actualResult = mockMvc.perform(requestBuilder).andReturn();
+    // mock request
+    final RequestBuilder requestBuilder =
+        MockMvcRequestBuilders.delete("/customers/1001")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON);
+    final MvcResult actualResult = this.mockMvc.perform(requestBuilder).andReturn();
 
-        // check HTTP response
-        assertTrue(actualResult.getResponse().getStatus() == 202);
-    }
+    // check HTTP response
+    assertTrue(actualResult.getResponse().getStatus() == 202);
+  }
 
-    @Test
-    public void testGetCustomer() throws Exception {
+  @Test
+  public void testGetCustomer() throws Exception {
 
-        // mock data
-        when(customerRepository.findById(1001)).thenReturn(Optional.of(mockCustomer));
+    // mock data
+    when(this.customerRepository.findById(1001)).thenReturn(Optional.of(this.mockCustomer));
 
-        // mock request
-        final RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/customers/1001");
-        final MvcResult actualResult = mockMvc.perform(requestBuilder).andReturn();
+    // mock request
+    final RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/customers/1001");
+    final MvcResult actualResult = this.mockMvc.perform(requestBuilder).andReturn();
 
-        // check response
-        JSONAssert.assertEquals(expectedResult, actualResult.getResponse().getContentAsString(), false);
+    // check response
+    JSONAssert.assertEquals(this.expectedResult, actualResult.getResponse().getContentAsString(), false);
 
-        // check HTTP response
-        assertTrue(actualResult.getResponse().getStatus() == 200);
-
-    }
+    // check HTTP response
+    assertTrue(actualResult.getResponse().getStatus() == 200);
+  }
 }

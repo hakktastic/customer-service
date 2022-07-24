@@ -11,107 +11,122 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Rest controller for Customer Service.
- */
+/** Rest controller for Customer Service. */
 @RestController
 @Slf4j
 public class CustomerController {
 
-    @Autowired
-    private CustomerService customerService;
+  @Autowired private CustomerService customerService;
 
-    /**
-     * Create Customer Entity.
-     *
-     * @param customer {@link Customer} data
-     * @return Returns a {@link Customer} Entity
-     */
-    @PostMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+  /**
+   * Create Customer Entity.
+   *
+   * @param customer {@link Customer} data
+   * @return Returns a {@link Customer} Entity
+   */
+  @PostMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
 
-        log.info("create customer --> starting creation of customer -> {}", customer);
+    log.info("create customer --> starting creation of customer -> {}", customer);
 
-        var optionalCustomer = customerService.createCustomer(customer);
-        var status = (optionalCustomer.isPresent()) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
+    var optionalCustomer = this.customerService.createCustomer(customer);
+    var status = (optionalCustomer.isPresent()) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
 
-        log.info("create customer --> response code -> {} ({}) - response body -> {} ", status.value(), status.name(), optionalCustomer.orElseGet(() -> null));
+    log.info(
+        "create customer --> response code -> {} ({}) - response body -> {} ",
+        status.value(),
+        status.name(),
+        optionalCustomer.orElseGet(() -> null));
 
-        return new ResponseEntity<>(optionalCustomer.orElseGet(() -> null), status);
-    }
+    return new ResponseEntity<>(optionalCustomer.orElseGet(() -> null), status);
+  }
 
-    /**
-     * Delete Customer Entity.
-     *
-     * @param id ID of Customer Entity
-     * @return Returns HTTP Response Code 202 Accepted if Customer is deleted
-     */
-    @DeleteMapping(path = "/customers/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> deleteCustomer(@PathVariable int id) {
+  /**
+   * Delete Customer Entity.
+   *
+   * @param id ID of Customer Entity
+   * @return Returns HTTP Response Code 202 Accepted if Customer is deleted
+   */
+  @DeleteMapping(path = "/customers/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Object> deleteCustomer(@PathVariable int id) {
 
-        log.info("delete customer --> starting deletion of customer with id-> {}", id);
+    log.info("delete customer --> starting deletion of customer with id-> {}", id);
 
-        customerService.deleteCustomer(id);
+      this.customerService.deleteCustomer(id);
 
-        log.info("delete customer --> response code -> {} ({})", HttpStatus.OK.value(), HttpStatus.OK.name());
+    log.info(
+        "delete customer --> response code -> {} ({})",
+        HttpStatus.OK.value(),
+        HttpStatus.OK.name());
 
-        return new ResponseEntity<>("Customer deleted successsfully", HttpStatus.OK);
-    }
+    return new ResponseEntity<>("Customer deleted successsfully", HttpStatus.OK);
+  }
 
-    /**
-     * Get all Customer Entities.
-     *
-     * @return Returns a {@link List} with all Customer Entities
-     */
-    @GetMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Customer>> getAllCustomers() {
+  /**
+   * Get all Customer Entities.
+   *
+   * @return Returns a {@link List} with all Customer Entities
+   */
+  @GetMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<Customer>> getAllCustomers() {
 
-        log.info("get customers --> starting retrieval of all customers");
+    log.info("get customers --> starting retrieval of all customers");
 
-        var customerEntityList = customerService.getAllCustomers();
-        HttpStatus status = (!customerEntityList.isEmpty()) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    var customerEntityList = this.customerService.getAllCustomers();
+    HttpStatus status = (!customerEntityList.isEmpty()) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
 
-        log.info("get customers --> response code -> {} ({}) - nr of found customers -> {}", status.value(), status.name(), (!(customerEntityList.isEmpty()) ? customerEntityList.size() : "-"));
+    log.info(
+        "get customers --> response code -> {} ({}) - nr of found customers -> {}",
+        status.value(),
+        status.name(),
+        (!(customerEntityList.isEmpty()) ? customerEntityList.size() : "-"));
 
-        return new ResponseEntity<>(customerEntityList, status);
-    }
+    return new ResponseEntity<>(customerEntityList, status);
+  }
 
-    /**
-     * Get Customer Entity by ID.
-     *
-     * @param id Object ID of Customer Entity
-     * @return Returns a {@link Customer} Entity
-     */
-    @GetMapping(path = "/customers/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomerById(@PathVariable int id) {
+  /**
+   * Get Customer Entity by ID.
+   *
+   * @param id Object ID of Customer Entity
+   * @return Returns a {@link Customer} Entity
+   */
+  @GetMapping(path = "/customers/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Customer> getCustomerById(@PathVariable int id) {
 
-        log.info("get customer --> starting retrieval of car with id -> {}", id);
+    log.info("get customer --> starting retrieval of car with id -> {}", id);
 
-        var optionalCustomer = customerService.getSingleCustomer(id);
-        var status = (optionalCustomer.isPresent()) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    var optionalCustomer = this.customerService.getSingleCustomer(id);
+    var status = (optionalCustomer.isPresent()) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
 
-        log.info("get customer --> response code -> {} ({}) - response body -> {} ", status.value(), status.name(), optionalCustomer.orElseGet(() -> null));
+    log.info(
+        "get customer --> response code -> {} ({}) - response body -> {} ",
+        status.value(),
+        status.name(),
+        optionalCustomer.orElseGet(() -> null));
 
-        return new ResponseEntity<>(optionalCustomer.orElseGet(() -> null), status);
-    }
+    return new ResponseEntity<>(optionalCustomer.orElseGet(() -> null), status);
+  }
 
-    /**
-     * Get Customer Entity by name.
-     *
-     * @param name First- and last name of Customer Entity
-     * @return Returns a {@link Customer} Entity
-     */
-    @GetMapping(path = "/customers/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomerByName(@PathVariable String name) {
+  /**
+   * Get Customer Entity by name.
+   *
+   * @param name First- and last name of Customer Entity
+   * @return Returns a {@link Customer} Entity
+   */
+  @GetMapping(path = "/customers/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Customer> getCustomerByName(@PathVariable String name) {
 
-        log.info("get customer --> starting retrieval of car with id -> {}", name);
+    log.info("get customer --> starting retrieval of car with id -> {}", name);
 
-        var optionalCustomer = customerService.getSingleCustomer(name);
-        var status = (optionalCustomer.isPresent()) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    var optionalCustomer = this.customerService.getSingleCustomer(name);
+    var status = (optionalCustomer.isPresent()) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
 
-        log.info("get customer --> response code -> {} ({}) - response body -> {} ", status.value(), status.name(), optionalCustomer.orElseGet(() -> null));
+    log.info(
+        "get customer --> response code -> {} ({}) - response body -> {} ",
+        status.value(),
+        status.name(),
+        optionalCustomer.orElseGet(() -> null));
 
-        return new ResponseEntity<>(optionalCustomer.orElseGet(() -> null), status);
-    }
-
+    return new ResponseEntity<>(optionalCustomer.orElseGet(() -> null), status);
+  }
 }
