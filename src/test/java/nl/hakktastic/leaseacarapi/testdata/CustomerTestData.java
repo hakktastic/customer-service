@@ -7,6 +7,8 @@ public final class CustomerTestData {
   /** Customer Names. */
   public static final String NAME_VALID = "Customer Name";
 
+  public static final String NAME_VALID_HARRY_SNEL = "Harry Snel";
+  public static final String NAME_INVALID_NON_EXISTING = "Non Existing Customer";
   public static final String NAME_INVALID_MAX_LENGTH =
       "This is an invalid customer name with more than fifty characters";
   public static final String NAME_INVALID_MIN_LENGTH = "A";
