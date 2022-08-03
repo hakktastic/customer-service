@@ -13,7 +13,7 @@ public class CustomerRepositoryTest {
   @Autowired CustomerRepository repository;
 
   @Test
-  public void givenNoName_whenCreatingCustomer_thenExpectIllegalArgumentException() {
+  public void givenNoName_whenFindByName_thenExpectIllegalArgumentException() {
 
     Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
         .isThrownBy(() -> this.repository.findByName(null))
@@ -21,7 +21,7 @@ public class CustomerRepositoryTest {
   }
 
   @Test
-  public void givenValidName_whenCreatingCustomer_thenExpectValidCustomer() {
+  public void givenValidName_whenFindByName_thenReturnValidCustomer() {
 
     var customer = this.repository.findByName(CustomerTestData.NAME_VALID_HARRY_SNEL).get();
 
@@ -30,10 +30,14 @@ public class CustomerRepositoryTest {
   }
 
   @Test
-  public void givenInvalidName_whenCreatingCustomer_thenExpectNull() {
+  public void givenInvalidName_whenFindByName_thenReturnNull() {
 
     var customer = this.repository.findByName(CustomerTestData.NAME_INVALID_NON_EXISTING);
 
     Assertions.assertThat(customer.isEmpty());
   }
+
+
+
+
 }
