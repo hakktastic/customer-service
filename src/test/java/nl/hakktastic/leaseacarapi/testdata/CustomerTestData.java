@@ -4,6 +4,9 @@ import nl.hakktastic.leaseacarapi.entity.Customer;
 
 public final class CustomerTestData {
 
+  /** Customer Numbers. */
+  public static final int VALID_CUSTOMER_ID = 1000;
+
   /** Customer Names. */
   public static final String NAME_VALID = "Customer Name";
 
