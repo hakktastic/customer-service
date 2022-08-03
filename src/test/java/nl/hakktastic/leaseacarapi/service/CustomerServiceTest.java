@@ -39,9 +39,9 @@ public class CustomerServiceTest {
 
     var customerServiceMock = mock(CustomerService.class);
 
-    doNothing().when(customerServiceMock).deleteCustomer(CustomerTestData.VALID_CUSTOMER_ID);
-    customerServiceMock.deleteCustomer(CustomerTestData.VALID_CUSTOMER_ID);
-    verify(customerServiceMock, times(1)).deleteCustomer(CustomerTestData.VALID_CUSTOMER_ID);
+    doNothing().when(customerServiceMock).deleteCustomer(CustomerTestData.CUSTOMER_ID_VALID);
+    customerServiceMock.deleteCustomer(CustomerTestData.CUSTOMER_ID_VALID);
+    verify(customerServiceMock, times(1)).deleteCustomer(CustomerTestData.CUSTOMER_ID_VALID);
   }
 
   @Test
@@ -65,7 +65,7 @@ public class CustomerServiceTest {
     when(customerRepository.findById(any(Integer.class)))
         .thenReturn(Optional.ofNullable(CustomerTestData.CUSTOMER_OBJECT_VALID_ALL_ARGS));
 
-    var customer = customerService.getSingleCustomer(CustomerTestData.VALID_CUSTOMER_ID);
+    var customer = customerService.getSingleCustomer(CustomerTestData.CUSTOMER_ID_VALID);
 
     assertThat(customer.get())
         .isNotNull()
