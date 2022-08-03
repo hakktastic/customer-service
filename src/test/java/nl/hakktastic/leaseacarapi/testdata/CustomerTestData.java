@@ -5,7 +5,9 @@ import nl.hakktastic.leaseacarapi.entity.Customer;
 public final class CustomerTestData {
 
   /** Customer Numbers. */
-  public static final int VALID_CUSTOMER_ID = 1000;
+  public static final int CUSTOMER_ID_VALID = 1001;
+
+  public static final int CUSTOMER_ID_INVALID = -10;
 
   /** Customer Names. */
   public static final String NAME_VALID = "Customer Name";
@@ -110,6 +112,42 @@ public final class CustomerTestData {
           .phoneNumber(PHONE_NUMBER_VALID)
           .build();
 
+  public static final Customer CUSTOMER_OBJECT_INVALID_STREET_NAME =
+      new Customer()
+          .builder()
+          .name(NAME_VALID)
+          // .street(STREET_NAME_VALID)
+          .houseNumber(HOUSE_NR_VALID)
+          .zipcode(ZIP_CODE_VALID)
+          .place(PLACE_NAME_VALID)
+          .email(EMAIL_VALID)
+          .phoneNumber(PHONE_NUMBER_VALID)
+          .build();
+
+  public static final Customer CUSTOMER_OBJECT_INVALID_HOUSE_NUMBER =
+      new Customer()
+          .builder()
+          .name(NAME_VALID)
+          .street(STREET_NAME_VALID)
+          // .houseNumber(HOUSE_NR_VALID)
+          .zipcode(ZIP_CODE_VALID)
+          .place(PLACE_NAME_VALID)
+          .email(EMAIL_VALID)
+          .phoneNumber(PHONE_NUMBER_VALID)
+          .build();
+
+  public static final Customer CUSTOMER_OBJECT_INVALID_ZIP_CODE =
+      new Customer()
+          .builder()
+          .name(NAME_VALID)
+          .street(STREET_NAME_VALID)
+          .houseNumber(HOUSE_NR_VALID)
+          // .zipcode(ZIP_CODE_VALID)
+          .place(PLACE_NAME_VALID)
+          .email(EMAIL_VALID)
+          .phoneNumber(PHONE_NUMBER_VALID)
+          .build();
+
   public static final Customer CUSTOMER_OBJECT_INVALID_NO_PLACE_NAME =
       new Customer()
           .builder()
@@ -144,5 +182,17 @@ public final class CustomerTestData {
           .place(PLACE_NAME_INVALID_MAX_LENGTH)
           .email(EMAIL_VALID)
           .phoneNumber(PHONE_NUMBER_VALID)
+          .build();
+
+  public static final Customer CUSTOMER_OBJECT_INVALID_PHONE_NUMBER =
+      new Customer()
+          .builder()
+          .name(NAME_VALID)
+          .street(STREET_NAME_VALID)
+          .houseNumber(HOUSE_NR_VALID)
+          .zipcode(ZIP_CODE_VALID)
+          .place(PLACE_NAME_VALID)
+          .email(EMAIL_VALID)
+          // .phoneNumber(PHONE_NUMBER_VALID)
           .build();
 }
