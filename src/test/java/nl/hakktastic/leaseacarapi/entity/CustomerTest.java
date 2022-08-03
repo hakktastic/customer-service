@@ -12,7 +12,13 @@ import javax.validation.ValidatorFactory;
 import static nl.hakktastic.leaseacarapi.testdata.CustomerTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-/** Entity Test for the class {@link Customer}. */
+/**
+ * Entity Test for the class {@link Customer}.
+ *
+ * <p>This test is not necessarily needed because it will be covered in the {@link
+ * nl.hakktastic.leaseacarapi.repository.CustomerRepository} tests. However, it's nice to see how
+ * hibernate validations are being done.
+ */
 public class CustomerTest {
 
   @Autowired private static ValidatorFactory factory;
