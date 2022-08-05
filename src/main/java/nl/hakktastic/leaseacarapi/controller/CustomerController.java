@@ -53,14 +53,28 @@ public class CustomerController {
 
     log.info("delete customer --> starting deletion of customer with id-> {}", id);
 
-    this.customerService.deleteCustomer(id);
+    var isCustomerDeleted = this.customerService.deleteCustomer(id);
 
-    log.info(
-        "delete customer --> response code -> {} ({})",
-        HttpStatus.OK.value(),
-        HttpStatus.OK.name());
+    if (isCustomerDeleted) {
 
-    return new ResponseEntity<>("Customer deleted successsfully", HttpStatus.OK);
+      log.info(
+          "delete customer --> response code -> {} ({})",
+          HttpStatus.OK.value(),
+          HttpStatus.OK.name());
+
+      return new ResponseEntity<>("Customer deleted successsfully", HttpStatus.OK);
+
+    } else {
+
+      log.info(
+          "delete customer --> response code -> {} ({})",
+          HttpStatus.NOT_FOUND.value(),
+          HttpStatus.NOT_FOUND.name());
+
+      return new ResponseEntity<>(
+          "Unable to delete Customer because unable to find Customer with provided ID",
+          HttpStatus.NOT_FOUND);
+    }
   }
 
   /**
