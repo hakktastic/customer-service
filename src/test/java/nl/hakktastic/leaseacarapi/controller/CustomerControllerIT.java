@@ -42,7 +42,7 @@ public class CustomerControllerIT {
   }
 
   @Test
-  public void givenInValidNoArgs_whenPostCustomer_thenReturnBadRequest() throws Exception {
+  public void givenNoArgs_whenPostCustomer_thenReturnBadRequest() throws Exception {
 
     var jsonStrCustomer = new Gson().toJson(CUSTOMER_OBJECT_INVALID_NO_ARGS);
 
