@@ -7,6 +7,7 @@ public final class CustomerTestData {
   /** Customer Numbers. */
   public static final int CUSTOMER_ID_VALID = 1001;
 
+  public static final int CUSTOMER_ID_VALID_2 = 1013;
   public static final int CUSTOMER_ID_INVALID = -10;
 
   /** Customer Names. */
