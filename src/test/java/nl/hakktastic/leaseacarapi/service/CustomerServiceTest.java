@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class CustomerServiceTest {
@@ -37,11 +38,21 @@ public class CustomerServiceTest {
   @Test
   public void givenValidCustomerId_whenDeleteCustomer_thanDeleteCustomer() {
 
-    var customerServiceMock = mock(CustomerService.class);
+    when(customerService.deleteCustomer(any(Integer.class))).thenReturn(true);
 
-    doNothing().when(customerServiceMock).deleteCustomer(CustomerTestData.CUSTOMER_ID_VALID);
-    customerServiceMock.deleteCustomer(CustomerTestData.CUSTOMER_ID_VALID);
-    verify(customerServiceMock, times(1)).deleteCustomer(CustomerTestData.CUSTOMER_ID_VALID);
+    var isCustomerDeleted = customerService.deleteCustomer(CustomerTestData.CUSTOMER_ID_VALID);
+
+    assertThat(isCustomerDeleted).isEqualTo(true);
+  }
+
+  @Test
+  public void givenInvalidCustomerId_whenDeleteCustomer_thanDeleteCustomer() {
+
+    when(customerService.deleteCustomer(any(Integer.class))).thenReturn(false);
+
+    var isCustomerDeleted = customerService.deleteCustomer(CustomerTestData.CUSTOMER_ID_VALID);
+
+    assertThat(isCustomerDeleted).isEqualTo(false);
   }
 
   @Test
