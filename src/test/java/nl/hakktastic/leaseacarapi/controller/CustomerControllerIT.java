@@ -11,8 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static nl.hakktastic.leaseacarapi.testdata.CustomerTestData.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,6 +38,9 @@ public class CustomerControllerIT {
         .andExpect(jsonPath("$.place", is(PLACE_NAME_VALID)))
         .andExpect(jsonPath("$.email", is(EMAIL_VALID)))
         .andExpect(jsonPath("$.phoneNumber", is(PHONE_NUMBER_VALID)));
+
+    // TODO Use JsonPath AssertMatcher instead of Hamcrest
+    // TODO .andExpect(jsonPath("$.phoneNumber").value(PHONE_NUMBER_VALID));
   }
 
   @Test
@@ -110,25 +112,74 @@ public class CustomerControllerIT {
   @Test
   public void givenValidCustomerId_whenDeleteCustomer_thenReturnOK() throws Exception {
 
-    var jsonStrCustomerId = new Gson().toJson(CUSTOMER_ID_VALID);
+    var jsonStrCustomerId = new Gson().toJson(CUSTOMER_ID_VALID_2);
 
     mockMvc
         .perform(
-            delete("/customers/{id}", CUSTOMER_ID_VALID)
+            delete("/customers/{id}", CUSTOMER_ID_VALID_2)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
   }
 
   @Test
-  public void givenInValidCustomerId_whenDeleteCustomer_thenReturnOK() throws Exception {
+  public void givenInValidCustomerId_whenDeleteCustomer_thenReturnNotFound() throws Exception {
 
-    // TODO actual is 200, expected is 400
     mockMvc
         .perform(
             delete("/customers/{id}", CUSTOMER_ID_INVALID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void givenCustomerExist_whenGetAllCustomers_thenReturnOK() throws Exception {
+
+    mockMvc.perform(get("/customers")).andExpect(status().isOk());
+  }
+
+  @Test
+  public void givenValidCustomerId_whenGetCustomerById_thenReturnOK() throws Exception {
+
+    mockMvc
+        .perform(
+            get("/customers/{id}", CUSTOMER_ID_VALID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void givenInvalidCustomerId_whenGetCustomerById_thenReturnNoContent() throws Exception {
+
+    mockMvc
+        .perform(
+            get("/customers/{id}", CUSTOMER_ID_INVALID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNoContent());
+  }
+
+  @Test
+  public void givenValidCustomerName_whenGetCustomerByName_thenReturnOK() throws Exception {
+
+    mockMvc
+        .perform(
+            get("/customers/name/{name}", NAME_VALID_HARRY_SNEL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void givenInvalidCustomerName_whenGetCustomerByName_thenReturnNotFound() throws Exception {
+
+    mockMvc
+        .perform(
+            get("/customers/name/{name}", NAME_INVALID_NON_EXISTING)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNoContent());
   }
 }
