@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /** Integration Test for {@link CustomerController} */
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CustomerControllerIT {
+public class CustomerControllerIntegrationTest {
 
   @Autowired private MockMvc mockMvc;
 
