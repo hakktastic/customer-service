@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static nl.hakktastic.leaseacarapi.testdata.CustomerTestData.*;
-import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,16 +30,13 @@ public class CustomerControllerIT {
         .perform(
             post("/customers").contentType(MediaType.APPLICATION_JSON).content(jsonStrCustomer))
         .andExpect(status().isCreated())
-        .andExpect(jsonPath("$.name", is(CustomerTestData.NAME_VALID)))
-        .andExpect(jsonPath("$.street", is(STREET_NAME_VALID)))
-        .andExpect(jsonPath("$.houseNumber", is(HOUSE_NR_VALID)))
-        .andExpect(jsonPath("$.zipcode", is(ZIP_CODE_VALID)))
-        .andExpect(jsonPath("$.place", is(PLACE_NAME_VALID)))
-        .andExpect(jsonPath("$.email", is(EMAIL_VALID)))
-        .andExpect(jsonPath("$.phoneNumber", is(PHONE_NUMBER_VALID)));
-
-    // TODO Use JsonPath AssertMatcher instead of Hamcrest
-    // TODO .andExpect(jsonPath("$.phoneNumber").value(PHONE_NUMBER_VALID));
+        .andExpect(jsonPath("$.name").value(CustomerTestData.NAME_VALID))
+        .andExpect(jsonPath("$.street").value(STREET_NAME_VALID))
+        .andExpect(jsonPath("$.houseNumber").value(HOUSE_NR_VALID))
+        .andExpect(jsonPath("$.zipcode").value(ZIP_CODE_VALID))
+        .andExpect(jsonPath("$.place").value(PLACE_NAME_VALID))
+        .andExpect(jsonPath("$.email").value(EMAIL_VALID))
+        .andExpect(jsonPath("$.phoneNumber").value(PHONE_NUMBER_VALID));
   }
 
   @Test
