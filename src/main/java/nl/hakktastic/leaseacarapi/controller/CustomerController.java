@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /** Rest controller for Customer Service. */
@@ -25,7 +26,7 @@ public class CustomerController {
    * @return Returns a {@link Customer} Entity
    */
   @PostMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+  public ResponseEntity<Customer> createCustomer(@RequestBody @Valid Customer customer) {
 
     log.info("create customer --> starting creation of customer -> {}", customer);
 
@@ -48,18 +49,32 @@ public class CustomerController {
    * @return Returns HTTP Response Code 202 Accepted if Customer is deleted
    */
   @DeleteMapping(path = "/customers/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> deleteCustomer(@PathVariable int id) {
+  public ResponseEntity<Object> deleteCustomer(@PathVariable @Valid int id) {
 
     log.info("delete customer --> starting deletion of customer with id-> {}", id);
 
-      this.customerService.deleteCustomer(id);
+    var isCustomerDeleted = this.customerService.deleteCustomer(id);
 
-    log.info(
-        "delete customer --> response code -> {} ({})",
-        HttpStatus.OK.value(),
-        HttpStatus.OK.name());
+    if (isCustomerDeleted) {
 
-    return new ResponseEntity<>("Customer deleted successsfully", HttpStatus.OK);
+      log.info(
+          "delete customer --> response code -> {} ({})",
+          HttpStatus.OK.value(),
+          HttpStatus.OK.name());
+
+      return new ResponseEntity<>("Customer deleted successsfully", HttpStatus.OK);
+
+    } else {
+
+      log.info(
+          "delete customer --> response code -> {} ({})",
+          HttpStatus.NOT_FOUND.value(),
+          HttpStatus.NOT_FOUND.name());
+
+      return new ResponseEntity<>(
+          "Unable to delete Customer because unable to find Customer with provided ID",
+          HttpStatus.NOT_FOUND);
+    }
   }
 
   /**
@@ -91,7 +106,7 @@ public class CustomerController {
    * @return Returns a {@link Customer} Entity
    */
   @GetMapping(path = "/customers/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Customer> getCustomerById(@PathVariable int id) {
+  public ResponseEntity<Customer> getCustomerById(@PathVariable @Valid int id) {
 
     log.info("get customer --> starting retrieval of car with id -> {}", id);
 
@@ -114,7 +129,7 @@ public class CustomerController {
    * @return Returns a {@link Customer} Entity
    */
   @GetMapping(path = "/customers/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Customer> getCustomerByName(@PathVariable String name) {
+  public ResponseEntity<Customer> getCustomerByName(@PathVariable @Valid String name) {
 
     log.info("get customer --> starting retrieval of car with id -> {}", name);
 

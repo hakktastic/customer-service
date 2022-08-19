@@ -29,11 +29,17 @@ public class CustomerService {
    * Delete a {@link Customer} entity.
    *
    * @param id ID of the customer to be deleted
+   * @return Returns TRUE if customer is found, otherwise returns FALSE
    */
-  public void deleteCustomer(int id) {
+  public boolean deleteCustomer(int id) {
 
-    var customerEntity = this.repository.getReferenceById(id);
-      this.repository.delete(customerEntity);
+    if (repository.existsById(id)) {
+
+      repository.deleteById(id);
+      return true;
+    }
+
+    return false;
   }
 
   /**
