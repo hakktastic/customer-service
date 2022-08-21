@@ -41,7 +41,7 @@ public class CustomerTest {
   public void givenNoArgs_whenCreateCustomer_thenExpectConstraintViolations() {
 
     var validations = validator.validate(CUSTOMER_OBJECT_INVALID_NO_ARGS);
-    assertThat(validations).isNotEmpty().hasSize(5);
+    assertThat(validations).isNotEmpty().hasSize(6);
   }
 
   @Test
