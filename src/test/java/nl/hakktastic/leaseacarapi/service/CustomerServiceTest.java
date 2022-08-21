@@ -38,21 +38,21 @@ public class CustomerServiceTest {
   @Test
   public void givenValidCustomerId_whenDeleteCustomer_thanDeleteCustomer() {
 
-    when(customerService.deleteCustomer(any(Integer.class))).thenReturn(true);
+    when(customerRepository.existsById(any(Integer.class))).thenReturn(Boolean.TRUE);
 
     var isCustomerDeleted = customerService.deleteCustomer(CustomerTestData.CUSTOMER_ID_VALID);
 
-    assertThat(isCustomerDeleted).isEqualTo(true);
+    assertThat(isCustomerDeleted).isEqualTo(Boolean.TRUE);
   }
 
   @Test
   public void givenInvalidCustomerId_whenDeleteCustomer_thanDeleteCustomer() {
 
-    when(customerService.deleteCustomer(any(Integer.class))).thenReturn(false);
+    when(customerRepository.existsById(any(Integer.class))).thenReturn(Boolean.FALSE);
 
     var isCustomerDeleted = customerService.deleteCustomer(CustomerTestData.CUSTOMER_ID_VALID);
 
-    assertThat(isCustomerDeleted).isEqualTo(false);
+    assertThat(isCustomerDeleted).isEqualTo(Boolean.FALSE);
   }
 
   @Test
