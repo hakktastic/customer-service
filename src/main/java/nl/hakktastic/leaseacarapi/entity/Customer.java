@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,9 @@ public class Customer {
   @Length(min = 3, max = 250)
   private String street;
 
-  @NotNull private int houseNumber;
+  @NotNull
+  @Range(min = 1)
+  private int houseNumber;
 
   @NotNull
   @Length(min = 4, max = 10)
