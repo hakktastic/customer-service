@@ -108,8 +108,6 @@ public class CustomerControllerIntegrationTest {
   @Test
   public void givenValidCustomerId_whenDeleteCustomer_thenReturnOK() throws Exception {
 
-    var jsonStrCustomerId = new Gson().toJson(CUSTOMER_ID_VALID_2);
-
     mockMvc
         .perform(
             delete("/customers/{id}", CUSTOMER_ID_VALID_2)
